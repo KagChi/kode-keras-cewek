@@ -3,9 +3,9 @@
 /* eslint-disable class-methods-use-this */
 import { InteractionHandler, Interactions, Piece } from "@skyra/http-framework";
 import { ButtonBuilder, ActionRowBuilder, bold } from "@discordjs/builders";
-import { stripIndent } from "common-tags";
-import { ButtonStyle } from "discord-api-types/v10";
-import { ChatType, DialogChat } from "../../stores/Dialog.js";
+import { stripIndents } from "common-tags";
+import { ButtonStyle, MessageFlags } from "discord-api-types/v10";
+import { ChatType, DialogChat } from "../stores/Dialog.js";
 
 export class cewekAskCowok_1_1 extends InteractionHandler {
     public constructor(context: Piece.Context) {
@@ -15,8 +15,7 @@ export class cewekAskCowok_1_1 extends InteractionHandler {
     }
 
     public run(interaction: Interactions.MessageComponentStringSelect, { parent, action }: { parent: string; action: string }): any {
-        const dialog = this.container.stores.get("dialogs").find(x => x.options.identifier === parent);
-        if (!dialog) return interaction.reply({ content: "Dialog not found" });
+        const dialog = this.container.stores.get("dialogs").find(x => x.options.identifier === parent); if (!dialog) return interaction.reply({ content: "No dialog found !", flags: MessageFlags.Ephemeral });
         if (action && action in dialog) {
             // @ts-expect-error Little hacky but it works
             const chat: DialogChat | DialogChat[] = dialog[action]();
@@ -53,7 +52,9 @@ export class cewekAskCowok_1_1 extends InteractionHandler {
                 return interaction.update({
                     components: row.components.length ? [row.toJSON()] : [],
                     content:
-            stripIndent`
+            stripIndents`
+            ${bold(dialog.options.name!)}, By: ${bold(dialog.options.author)}
+
     ${chat.map(x => {
         switch (x.type) {
             case 0:
@@ -86,13 +87,26 @@ export class cewekAskCowok_1_1 extends InteractionHandler {
                 row.addComponents(component);
             }
 
-            return interaction.reply({
-                components: [row.toJSON()],
-                content:
-            stripIndent`
-    ${bold("Cewek")}: ${chat.message!}
-            `
-            });
+            switch (chat.type) {
+                case ChatType.Cowok:
+                    return interaction.reply({
+                        components: [row.toJSON()],
+                        content:
+                    stripIndents`
+            ${bold("Cowok")}: ${chat.message!}
+                    `
+                    });
+                case ChatType.Cewek:
+                    return interaction.reply({
+                        components: [row.toJSON()],
+                        content:
+                    stripIndents`
+            ${bold("Cewek")}: ${chat.message!}
+                    `
+                    });
+                default:
+                    break;
+            }
         }
     }
 }

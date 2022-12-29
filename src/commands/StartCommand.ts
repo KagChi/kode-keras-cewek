@@ -1,9 +1,9 @@
 /* eslint-disable class-methods-use-this */
 import { ActionRowBuilder, ButtonBuilder, bold } from "@discordjs/builders";
 import { Command, PieceContext, PieceOptions, RegisterCommand } from "@skyra/http-framework";
-import { stripIndent } from "common-tags";
+import { stripIndents } from "common-tags";
 import { ChatType } from "../stores/Dialog.js";
-import { ButtonStyle } from "discord-api-types/v10";
+import { ButtonStyle, MessageFlags } from "discord-api-types/v10";
 
 @RegisterCommand(builder => {
     builder
@@ -23,8 +23,7 @@ export class StartCommand extends Command {
 
     public override async chatInputRun(interaction: Command.ChatInputInteraction): Promise<any> {
         const message = await interaction.defer();
-        const dialog = this.container.stores.get("dialogs").random();
-        if (!dialog) return interaction.reply({ content: "No dialog found !" });
+        const dialog = this.container.stores.get("dialogs").random(); if (!dialog) return interaction.reply({ content: "No dialog found !", flags: MessageFlags.Ephemeral });
         const chat = await dialog.init();
         if (Array.isArray(chat)) {
             const components: ButtonBuilder[] = [];
@@ -59,7 +58,9 @@ export class StartCommand extends Command {
             return message.update({
                 components: row.components.length ? [row.toJSON()] : [],
                 content:
-            stripIndent`
+            stripIndents`
+            ${bold(dialog.options.name!)}, By: ${bold(dialog.options.author)}
+
     ${chat.map(x => {
         switch (x.type) {
             case 0:
@@ -72,6 +73,45 @@ export class StartCommand extends Command {
     }).join("\n")}
             `
             });
+        }
+
+        const components: ButtonBuilder[] = [];
+        if (chat.type === ChatType.Cewek && chat.continue && !Array.isArray(chat.continue)) {
+            for (const choice of chat.continue.choices ?? []) {
+                components.push(
+                    new ButtonBuilder()
+                        .setCustomId(choice.name)
+                        .setLabel(choice.label)
+                        .setStyle(ButtonStyle.Primary)
+                );
+            }
+        }
+
+        const row = new ActionRowBuilder<ButtonBuilder>();
+
+        for (const component of components) {
+            row.addComponents(component);
+        }
+
+        switch (chat.type) {
+            case ChatType.Cowok:
+                return interaction.reply({
+                    components: [row.toJSON()],
+                    content:
+                    stripIndents`
+            ${bold("Cowok")}: ${chat.message!}
+                    `
+                });
+            case ChatType.Cewek:
+                return interaction.reply({
+                    components: [row.toJSON()],
+                    content:
+                    stripIndents`
+            ${bold("Cewek")}: ${chat.message!}
+                    `
+                });
+            default:
+                break;
         }
     }
 }

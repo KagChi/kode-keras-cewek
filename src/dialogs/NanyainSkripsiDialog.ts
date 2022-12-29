@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable class-methods-use-this */
 import { Awaitable } from "@sapphire/utilities";
@@ -10,7 +11,7 @@ export class TestDialog extends Dialog {
         super(context, {
             identifier: "test",
             author: "KagChi",
-            name: "Anu aja"
+            name: "Nanyain skripsi"
         });
     }
 
@@ -235,16 +236,25 @@ export class TestDialog extends Dialog {
             },
             {
                 type: ChatType.Cewek,
-                message: "Lah seriusan?"
+                message: "Lah seriusan? 10 BULAN KAMU NGAPAIN AJA ANJIR"
             },
             {
                 type: ChatType.Cewek,
-                message: "Yaudah, aku tunggu kamu selesai"
+                message: "Kamu udah bimbingan skripsi kemaren?"
             },
             {
                 type: ChatType.Cowok,
-                message: "Okelah yang"
-            }
+                message: "Iya, aku baca"
+            },
+            {
+                type: ChatType.Cowok,
+                message: "Tapi aku akan ngebut, sayang"
+            },
+            {
+                type: ChatType.Cewek,
+                message: "Awas ya kalo kamu ga lulus"
+            },
+            ...this.goodEnd()
         ];
     }
 
@@ -258,22 +268,7 @@ export class TestDialog extends Dialog {
                 type: ChatType.Cewek,
                 message: "Ya gak mungkin lah pe a"
             },
-            {
-                type: ChatType.Cewek,
-                message: "Jangan lupa"
-            },
-            {
-                type: ChatType.Cewek,
-                message: "Umur kamu udah 23 tahun"
-            },
-            {
-                type: ChatType.Cewek,
-                message: "Boro2 nikahin aku, kerja aja belom tentu"
-            },
-            {
-                type: ChatType.Cewek,
-                message: "Kita putus!"
-            }
+            ...this.badEnd()
         ];
     }
 
@@ -287,17 +282,45 @@ export class TestDialog extends Dialog {
                 type: ChatType.Cewek,
                 message: "Okelah kamu bohong"
             },
+            ...this.badEnd()
+        ];
+    }
+
+    public badEnd(): DialogChat[] {
+        return [
             {
                 type: ChatType.Cewek,
-                message: "Kita putus !"
+                message: "Urusin kuliah aja ga bener"
+            },
+            {
+                type: ChatType.Cewek,
+                message: "Apalagi urusin aku, tambah ga bener"
+            },
+            {
+                type: ChatType.Cewek,
+                message: "Umur kamu tuh udah 26 tahun"
+            },
+            {
+                type: ChatType.Cewek,
+                message: "Boro2 mau nikahin aku, kerja aja belom tentu"
+            },
+            {
+                type: ChatType.Cewek,
+                message: "Kita putus!"
             }
         ];
     }
 
-    public end(): DialogChat {
-        return {
-            type: ChatType.Cewek,
-            message: "Kita putus!"
-        };
+    public goodEnd(): DialogChat[] {
+        return [
+            {
+                type: ChatType.Cowok,
+                message: "Aku akan berjuang demi kamu sayang"
+            },
+            {
+                type: ChatType.Cewek,
+                message: "Kalo ada yang ga ngerti tanya aku aja ya"
+            }
+        ];
     }
 }

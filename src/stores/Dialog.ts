@@ -7,7 +7,8 @@ export abstract class Dialog extends Piece {
     }
 
     public abstract init(): Awaitable<DialogChat | DialogChat[]>;
-    public abstract end(): Awaitable<DialogChat | DialogChat[]>;
+    public abstract badEnd(): Awaitable<DialogChat | DialogChat[]>;
+    public abstract goodEnd(): Awaitable<DialogChat | DialogChat[]>;
 }
 
 export interface DialogChat {
