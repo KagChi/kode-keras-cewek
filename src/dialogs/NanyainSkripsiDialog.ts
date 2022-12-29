@@ -9,7 +9,7 @@ import { Util } from "../Util.js";
 export class TestDialog extends Dialog {
     public constructor(context: Piece.Context) {
         super(context, {
-            identifier: "test",
+            identifier: "1ae120",
             author: "KagChi",
             name: "Nanyain skripsi"
         });
@@ -59,7 +59,7 @@ export class TestDialog extends Dialog {
                     name: Util.encodeBase65536(JSON.stringify({
                         name: "playAction",
                         content: {
-                            parent: "test",
+                            parent: this.options.identifier,
                             action: "cewekAskCowok_1_1"
                         }
                     }))
@@ -70,7 +70,7 @@ export class TestDialog extends Dialog {
                     name: Util.encodeBase65536(JSON.stringify({
                         name: "playAction",
                         content: {
-                            parent: "test",
+                            parent: this.options.identifier,
                             action: "cewekAskCowok_1_2"
                         }
                     }))
@@ -81,7 +81,7 @@ export class TestDialog extends Dialog {
                     name: Util.encodeBase65536(JSON.stringify({
                         name: "playAction",
                         content: {
-                            parent: "test",
+                            parent: this.options.identifier,
                             action: "cewekAskCowok_1_3"
                         }
                     }))
@@ -113,7 +113,7 @@ export class TestDialog extends Dialog {
                         name: Util.encodeBase65536(JSON.stringify({
                             name: "playAction",
                             content: {
-                                parent: "test",
+                                parent: this.options.identifier,
                                 action: "cewekAskCowok_2_1"
                             }
                         }))
@@ -124,7 +124,7 @@ export class TestDialog extends Dialog {
                         name: Util.encodeBase65536(JSON.stringify({
                             name: "playAction",
                             content: {
-                                parent: "test",
+                                parent: this.options.identifier,
                                 action: "cewekAskCowok_2_2"
                             }
                         }))
@@ -207,7 +207,7 @@ export class TestDialog extends Dialog {
                         name: Util.encodeBase65536(JSON.stringify({
                             name: "playAction",
                             content: {
-                                parent: "test",
+                                parent: this.options.identifier,
                                 action: "cewekAskCowok_3_1"
                             }
                         }))
@@ -218,7 +218,7 @@ export class TestDialog extends Dialog {
                         name: Util.encodeBase65536(JSON.stringify({
                             name: "playAction",
                             content: {
-                                parent: "test",
+                                parent: this.options.identifier,
                                 action: "cewekAskCowok_3_2"
                             }
                         }))
