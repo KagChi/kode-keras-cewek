@@ -44,7 +44,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.4.0",
     "@prisma/client": "^4.8.0",
-    "@sapphire/utilities": "^3.11.0",
+    "@sapphire/utilities": "^3.15.3",
     "@skyra/http-framework": "^0.15.0",
     "base65536": "^4.0.2",
     "common-tags": "^1.8.2",
